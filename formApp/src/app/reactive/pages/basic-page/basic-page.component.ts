@@ -46,6 +46,9 @@ export class BasicPageComponent implements OnInit{
 
   /*
   * Podemos usar un método / getter para obtener lo mensajes de validación
+  * Como este método se usa en varios componentes,
+  * lo ideal es inyectar el servicio "validators.services"
+  * que contine esta lógica (ver ejemplo en register-page.component)
   */
  isInvalidField (field: string): boolean | null {
   return this.myForm.controls[field].errors

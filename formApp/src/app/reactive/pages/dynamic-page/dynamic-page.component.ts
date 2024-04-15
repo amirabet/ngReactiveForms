@@ -30,6 +30,11 @@ export class DynamicPageComponent {
     return this.myForm.get('favoriteGames') as FormArray;
   }
 
+  /*
+  * Como este método se usa en varios componentes,
+  * lo ideal es inyectar el servicio "validators.services"
+  * que contine esta lógica (ver ejemplo en register-page.component)
+  */
   isInvalidField(field: string): boolean | null {
     return this.myForm.controls[field].errors
       && this.myForm.controls[field].touched;

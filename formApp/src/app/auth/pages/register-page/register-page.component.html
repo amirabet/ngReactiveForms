@@ -4,17 +4,18 @@
 <div class="row">
     <div class="col">
 
-        <form autocomplete="off">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
             <!-- Nombre -->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Nombre</label>
                 <div class="col-sm-9">
-                    <input type="text"
+                    <input formControlName="name"
+                           type="text"
                            class="form-control"
                            placeholder="Nombre del usuario">
 
-                    <span class="form-text text-danger">
+                    <span *ngIf="isInvalidField('name')" class="form-text text-danger">
                         Debe de ser en formato de nombre y apellido
                     </span>
                 </div>
@@ -24,11 +25,13 @@
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                    <input type="email"
+                    <input formControlName="email"
+                           type="email"
                            class="form-control"
                            placeholder="Email del usuario">
-                    <span class="form-text text-danger">
-                        mensaje de error del email
+
+                    <span *ngIf="isInvalidField('email')" class="form-text text-danger">
+                        Mensaje de error del email
                     </span>
                 </div>
             </div>
@@ -37,11 +40,12 @@
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Username</label>
                 <div class="col-sm-9">
-                    <input type="text"
+                    <input formControlName="username"
+                           type="text"
                            class="form-control"
                            placeholder="Nombre código del usuario">
-                    <span class="form-text text-danger">
-                         El username no puede ser Strider
+                    <span *ngIf="isInvalidField('username')" class="form-text text-danger">
+                         El username es obligatorio y no puede ser Strider
                     </span>
                 </div>
             </div>
@@ -50,11 +54,12 @@
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                    <input type="password"
+                    <input formControlName="password"
+                           type="password"
                            class="form-control"
                            placeholder="Password de su cuenta">
 
-                    <span class="form-text text-danger">
+                    <span *ngIf="isInvalidField('password')" class="form-text text-danger">
                          La contraseña debe de ser mayor de 6 caracteres.
                     </span>
                 </div>
@@ -64,11 +69,12 @@
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Confirmar</label>
                 <div class="col-sm-9">
-                    <input type="password"
+                    <input formControlName="password2"
+                           type="password"
                            class="form-control"
                            placeholder="Confirmar la contraseña">
 
-                    <span class="form-text text-danger">
+                    <span *ngIf="isInvalidField('password2')" class="form-text text-danger">
                          Las contraseñas deben de ser iguales
                     </span>
                 </div>
@@ -83,31 +89,51 @@
                     </button>
                 </div>
             </div>
-
-
         </form>
     </div>
 </div>
 
+<hr>
+<div class="row mt-4">
+    <div class="col-12 col-sm-4">
+        <h4>Form state</h4>
+        <h6>Form Valid: {{ myForm.valid | json }}</h6>
+        <h6>Form Status: {{ myForm.status | json }}</h6>
+        <h6>Form Pending: {{ myForm.pending | json }}</h6>
+        <br>
+        Con <code>Form Status: "Pending"</code> o <code>Form Pending: true</code>, el formualrio está esperando la respuesta de una validación async.
+    </div>
 
-<h2>Form Valid: </h2>
-<h2>Form Status: </h2>
-<h2>Form Pending: </h2>
-<h2>Form errors</h2>
-<pre>{{ 'formulario' | json }}</pre>
+    <div class="col-12 col-sm-4">
+        <h4>Form errors</h4>
 
-<h5>Nombre</h5>
-<pre>{{ 'formulario' | json }}</pre>
+        <h5>Nombre</h5>
+        <pre>{{ myForm.controls['name'].errors | json }}</pre>
 
-<h5>Email</h5>
-<pre>{{ 'formulario' | json }}</pre>
+        <h5>Email</h5>
+        <pre>{{ myForm.controls['email'].errors | json }}</pre>
 
-<h5>Username</h5>
-<pre>{{ 'formulario' | json }}</pre>
+        <h5>Username</h5>
+        <pre>{{ myForm.controls['username'].errors | json }}</pre>
+    </div>
+
+    <div class="col-12 col-sm-4">
+        <h4>Passwords</h4>
+        <h5>Password</h5>
+        <pre>{{ myForm.value.password | json }}</pre>
+
+        <h5>Confirmar</h5>
+        <pre>{{ myForm.value.password2 | json }}</pre>
+
+        <h5>Errores password2</h5>
+        <pre>{{  myForm.controls['password2'].errors | json }}</pre>
+
+    </div>
+</div>
 
 
-<h5>Password</h5>
-<pre>{{ 'formulario' | json }}</pre>
 
-<h5>Confirmar</h5>
-<pre>{{ 'formulario' | json }}</pre>
+
+
+
+
