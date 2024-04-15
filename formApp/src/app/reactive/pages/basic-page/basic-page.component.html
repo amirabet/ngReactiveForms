@@ -18,10 +18,29 @@
                            class="form-control"
                            placeholder="Nombre del producto">
 
-                    <span class="form-text text-danger">
-                        <!-- Debe de ser de 3 letras -->
-                        error message
+                    <!-- Varias formas de representar elmensaje de  error -->
+
+                    <!-- 1/ con ngIf y contemplando Touched => required -->
+                    <!-- <span *ngIf="myForm.controls['name'].getError('required') && myForm.controls['name'].touched"
+                        class="form-text text-danger">
+                        <!- - Se debe rellenar - ->
+                        Este campo el obligatorio
+                    </span> -->
+
+                    <!-- 2/  con ngIf y contemplando Touched => minlength => OJO con minúculas todo 'minlength' -->
+                    <!-- <span *ngIf="myForm.controls['name'].getError('minlength') && myForm.controls['name'].touched"
+                        class="form-text text-danger">
+                        <!- - Debe de ser de 3 letras - ->
+                        Este campo requiere 3 letras
+                    </span> -->
+
+                    <!-- 3/  usando el getter -->
+                    <span *ngIf="isInvalidField('name')"
+                        class="form-text text-danger">
+                        <!-- mensajje dinámico -->
+                        {{ this.getFieldError('name') }}
                     </span>
+
                 </div>
             </div>
 
@@ -33,7 +52,8 @@
                            formControlName="price"
                            class="form-control"
                            placeholder="Precio del producto">
-                    <span class="form-text text-danger">
+                    <span *ngIf="isInvalidField('price')"
+                        class="form-text text-danger">
                         El precio debe de ser 0 o mayor
                     </span>
                 </div>
@@ -48,7 +68,8 @@
                            class="form-control"
                            placeholder="Existencias del producto">
 
-                    <span class="form-text text-danger">
+                    <span *ngIf="isInvalidField('inStorage')"
+                        class="form-text text-danger">
                          Las existencias deben de ser 0 o mayor
                     </span>
                 </div>
@@ -73,26 +94,50 @@
 
 
 
+<hr>
+<div class="row mt-4">
+    <div class="col-12 col-sm-4">
 
-<div class="row">
-    <div class="col">
-
+        <h4>Form</h4>
+        <br>
         <span>Valid</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm.valid | json }}</pre>
 
         <span>Pristine</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{  myForm.pristine | json }}</pre>
 
         <span>Touched</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{  myForm.touched | json }}</pre>
 
         <span>Value</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm.value | json }}</pre>
+    </div>
 
+    <div class="col-12 col-sm-4">
+        <h4>Price</h4>
+        <br>
         <span>Precio</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm.controls['price'].value | json }}</pre>
 
+        <span>Precio - Errors</span>
+        <pre>{{ myForm.controls['price'].errors | json }}</pre>
+        <br>
+        <h4>inStorage</h4>
+        <br>
+        <span>In Storage</span>
+        <pre>{{ myForm.controls['inStorage'].value | json }}</pre>
+
+        <span>In Storage - Errors</span>
+        <pre>{{ myForm.controls['inStorage'].errors | json }}</pre>
+    </div>
+    
+    <div class="col-12 col-sm-4">
+        <h4>Product</h4>
+        <br>
         <span>Producto</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm.controls['name'].value | json }}</pre>
+
+        <span>Producto - Errors</span>
+        <pre>{{ myForm.controls['name'].errors | json }}</pre>
     </div>
 </div>
